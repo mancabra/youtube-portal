@@ -12,6 +12,12 @@ mantenemos las versiones de acuerdo a [Semantic Versioning](https://semver.org/s
 
 ## [Released]
 
+## [0.2.0] - 2025-02-10
+
+### [add]
+
+* Se añade código de la actividad 2: `Plan del proceso de desarrollo de software II.`.
+
 ## [0.1.0] - 2025-01-30
 
 ### [add]
