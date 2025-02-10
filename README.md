@@ -69,7 +69,9 @@ al archivo `.gitignore `.
 │           │   └── descargar_temas.md
 │           │
 │           ├── u2_tarea1
-│               └── makefile
+│               ├── hugo.toml
+│               ├── makefile
+│               └── setup.sh
 │
 ├── .dockerignore
 ├── .env
@@ -114,6 +116,33 @@ Crea una nueva entrada de blog en el proyecto. Utilizando las variables de entor
 ```bash
     make post
 ```
+
++++
+date = '2025-02-09T19:18:14-06:00'
+title = 'Bienvenidos a Tec-Net S.A.'
+draft = False
++++
+
+**Generar nuevos post con hugo desde terminal**
+
+instrucciones:
+
+1. Debe colocarse en directorio del proyecto del proyecto.
+
+```bash
+    cd src/actividad_2/tarea0_u2/u2_tarea0/dist
+```
+
+2. Se debe ejecutar en terminal la instrucción de creación.
+
+```hugo
+    hugo new content content/posts/file_name.md
+```
+
+3. Una vez creado el documento deberemos modificar las propiedades del post
+y agregar el texto de nuestra preferencia según el tema de nuestro post.
+
+*NOTA:* Se debe mencionar que para que un post sea publicado el atributo `draft` debe contener el valor `false`.
 
 ### 4. **Help**: Deplegar información de comandos Make
 
