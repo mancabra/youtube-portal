@@ -68,7 +68,7 @@ al archivo `.gitignore `.
 │           │   ├── dist
 │           │   └── descargar_temas.md
 │           │
-│           ├── u2_tarea1
+│           └── u2_tarea1
 │               ├── hugo.toml
 │               ├── makefile
 │               └── setup.sh
@@ -116,12 +116,6 @@ Crea una nueva entrada de blog en el proyecto. Utilizando las variables de entor
 ```bash
     make post
 ```
-
-+++
-date = '2025-02-09T19:18:14-06:00'
-title = 'Bienvenidos a Tec-Net S.A.'
-draft = False
-+++
 
 **Generar nuevos post con hugo desde terminal**
 
