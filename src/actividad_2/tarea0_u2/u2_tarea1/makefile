@@ -24,4 +24,15 @@ post:  ## Paso "Post": Crea una nueva entrada de blog
 	@echo "---\ntitle: \"$(POST_TITLE)\"\ndate: $(shell date +'%Y-%m-%dT%H:%M:%S%z')\nslug: $(POST_NAME)\ndraft: $(IS_DRAFT)\n---" > $(POST_DIR)/$(POST_NAME).md
 	@echo "Nueva entrada de blog creada: $(POST_NAME).md"
 
+help:	## Target "ayuda": Muestra los targets disponibles y su descripción
+	@echo "Comandos disponibles en el Makefile:"
+	@echo "  clean   - Limpia el contenido del directorio $(DIST_DIR)."
+	@echo "  build   - Genera el sitio web a partir de los archivos de configuración y markdown."
+	@echo "  post    - Crea una nueva entrada de blog usando las variables de entorno POST_TITLE y POST_NAME."
+	@echo ""
+	@echo "Uso de cada comando:"
+	@echo "  make clean"
+	@echo "  make build"
+	@echo "  POST_TITLE=\"Título\" POST_NAME=\"nombre-entrada\" make post"
+
 .PHONY: clean build post
