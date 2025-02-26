@@ -1,47 +1,101 @@
 name: Notifications In Slack
+
 on:
   push:
     branches:
       - develop
       - qa
       - main
-  pull_request:
-    branches:
-      - develop
-      - qa
-      - main
-  issues:
-    types:
-      - opened
-      - closed
-      - reopened
-      - edited
-      - deleted
-      - pinned
-      - unpinned
-      - assigned
-      - unassigned
-      - labeled
-      - unlabeled
-      - milestoned
-      - demilestoned
-  issue_comment:
-    types:
-      - created
-      - edited
-      - deleted
-  create:
-    branches:
-      - "*"
-    tags:
-      - "*"
-  delete:
-    branches:
-      - "*"
-    tags:
-      - "*"
- 
+  schedule:
+    - cron: '0 0 * * *'  ## Esto ejecuta la acción una vez al día a la medianoche (UTC)
 jobs:
+  setup:
+    runs-on: ubuntu-18.04  # Flujo de trabajo se ejecute en Ubuntu 18.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up environment
+        run: |
+          chmod +x ./setup.sh
+          ./setup.sh
+
+  lint:
+    runs-on: ubuntu-18.04  # Flujo de trabajo se ejecute en Ubuntu 18.04
+    needs: setup  # Asegúrate de que las herramientas estén instaladas antes de hacer lint
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Lint setup.sh using shellcheck
+        run: |
+          sudo apt-get install -y shellcheck
+          shellcheck ./setup.sh
+
+  build:
+    runs-on: ubuntu-18.04
+    needs: lint  # Asegúrate de que el lint haya pasado antes de hacer el build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up environment
+        run: |
+          chmod +x ./setup.sh
+          ./setup.sh
+
+      - name: Build project
+        run: |
+          make build
+
+  unit-tests:
+    runs-on: ubuntu-18.04
+    needs: build  # Asegúrate de que el build haya pasado antes de ejecutar pruebas unitarias
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up environment
+        run: |
+          chmod +x ./setup.sh
+          ./setup.sh
+
+      - name: Run unit tests
+        run: |
+          make unit-tests
+
+  validate:
+    runs-on: ubuntu-18.04
+    needs: unit-tests  # Asegúrate de que las pruebas unitarias hayan pasado antes de validar
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up environment
+        run: |
+          chmod +x ./setup.sh
+          ./setup.sh
+
+      - name: Validate project
+        run: |
+          make validate
+
+  integration-tests:
+    runs-on: ubuntu-18.04
+    needs: validate  # Asegúrate de que la validación haya pasado antes de ejecutar las pruebas de integración
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up environment
+        run: |
+          chmod +x ./setup.sh
+          ./setup.sh
+
+      - name: Run integration tests
+        run: |
+          make integration-tests
+
   notify_slack:
     runs-on: ubuntu-latest
     steps:
@@ -62,3 +116,21 @@ jobs:
                 }
               ]
             }
+
+  build_and_release:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create ZIP package
+        run: make package
+
+      - name: Create GitHub Release
+        uses: softprops/gh-release@v1
+        with:
+          tag: '1.0.0' # Etiqueta a la que se asocia el release
+          files: tecnet-website.zip
+          release_name: 'Release 1.0.0'
+          body: |
+            $(cat DEPLOY.md) # El contenido de DEPLOY.md se incluye en la descripción
