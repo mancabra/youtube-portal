@@ -1,0 +1,25 @@
+name: Release Drafter - Crear registro de cambios
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+      - master
+
+jobs:
+  drafter:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Release Drafter
+        uses: release-drafter/release-drafter-action@v5
+        with:
+          config-name: '.github/release_drafter.yml'
+
+      - name: Update release draft
+        uses: release-drafter/release-drafter-action@v5
+        with:
+          config-name: '.github/release_drafter.yml'

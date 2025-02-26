@@ -1,0 +1,18 @@
+name: 'Release {version}'
+
+tag_template: '{version}'
+
+changelog_filename: CHANGELOG.md
+
+template:
+  categories:
+    - title: '💥 Breaking Changes'
+      label: 'breaking'
+    - title: '✨ Features'
+      label: 'enhancement'
+    - title: '🐛 Bug Fixes'
+      label: 'bug'
+    - title: '🧰 Other Changes'
+      label: ''
+
+prerelease: false
