@@ -1,45 +1,13 @@
 name: Notifications In Slack
+
 on:
   push:
     branches:
       - develop
       - qa
       - main
-  pull_request:
-    branches:
-      - develop
-      - qa
-      - main
-  issues:
-    types:
-      - opened
-      - closed
-      - reopened
-      - edited
-      - deleted
-      - pinned
-      - unpinned
-      - assigned
-      - unassigned
-      - labeled
-      - unlabeled
-      - milestoned
-      - demilestoned
-  issue_comment:
-    types:
-      - created
-      - edited
-      - deleted
-  create:
-    branches:
-      - "*"
-    tags:
-      - "*"
-  delete:
-    branches:
-      - "*"
-    tags:
-      - "*"
+  schedule:
+    - cron: '0 0 * * *'  ## Esto ejecuta la acción una vez al día a la medianoche (UTC)
  
 jobs:
   notify_slack:

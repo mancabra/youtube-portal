@@ -146,3 +146,38 @@ Permite ver todos los comandos disponibles en el Makefile, junto con una breve d
 ```bash
     make help
 ```
+
+## Git Actions y Workflow
+
+*Las accciones de git nos ayudarán a automatizar procesos que se realizan con frecuencía en nuestro repositorio.*
+
+Para poder definir nuestras acciones, git nos solicita que se definan en un archivo `YAML` dentro del directorrio
+`.github/workflows/main.yml`.
+
+**Validación del nuevo código en el repositorio**:
+
+Dentro de nuestro archivo YAML tendremos la posibilidad de añadir eventos que se ejecuten cada que ocurre algo en nuestro repositorio en este caso tendremos la instrucción `push` con el sub elemento `branches` lo que nos permitirá ejecutar un
+evento cuando detecte que se hizo una integración de código en alguna de las ramas que indiquemos.
+
+```yaml
+    push:
+        branches:
+        - develop
+        - qa
+        - main
+```
+
+**Validación día a día del código en el repositorio**:
+
+Dentro de nuestro archivo YAML encontraremos la expresión `cron` con los valores `0 0 * * *`  la cual significa:
+
+- `0` minuto
+- `0` hora
+- `*` todos los días del mes
+- `*` todos los meses
+- `*` todos los días de la semana
+
+```yaml
+    schedule:
+        - cron: '0 0 * * *'
+```
