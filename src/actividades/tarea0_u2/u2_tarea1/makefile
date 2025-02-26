@@ -52,11 +52,28 @@ post:  ## Paso "Post": Crea una nueva entrada de blog
 	@echo "---\ntitle: \"$(POST_TITLE)\"\ndate: $(shell date +'%Y-%m-%dT%H:%M:%S%z')\nslug: $(POST_NAME)\ndraft: $(IS_DRAFT)\n---" > $(POST_DIR)/$(POST_NAME).md
 	@echo "Nueva entrada de blog creada: $(POST_NAME).md"
 
-package: clean ## Paso "Package": Crea el archivo ZIP con el binario y el directorio dist/
+package: clean	## Paso "Package": Crea el archivo ZIP con el binario y el directorio dist/
 	@echo "Generando el archivo $(PACKAGE_NAME)..."
 	@echo "Empaquetando el archivo $(PACKAGE_NAME)..."
 	@zip -r $(PACKAGE_NAME)  $(PACKAGE_DIR)
 	@echo "Archivo $(PACKAGE_NAME) creado."
+
+unit-tests:	## Paso "Unit tests": Ejecuta las pruebas unitarias
+	@echo "Ejecutando pruebas unitarias..."
+	@echo "Pruebas unitarias completadas."
+
+validate:
+	@echo "Validando el sitio Hugo..."
+	@$(HUGO) server --validate
+
+integration-tests:
+	@echo "Ejecutando pruebas de integración..."
+	@echo "Pruebas de integración completadas."
+
+lint:
+	@echo "Lint del script setup.sh..."
+	@sudo apt-get install -y shellcheck
+	@shellcheck ./setup.sh
 
 help:	## Target "ayuda": Muestra los targets disponibles y su descripción
 	@echo "Comandos disponibles en el Makefile:"

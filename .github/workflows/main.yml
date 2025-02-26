@@ -116,3 +116,21 @@ jobs:
                 }
               ]
             }
+
+  build_and_release:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create ZIP package
+        run: make package
+
+      - name: Create GitHub Release
+        uses: softprops/gh-release@v1
+        with:
+          tag: '1.0.0' # Etiqueta a la que se asocia el release
+          files: tecnet-website.zip
+          release_name: 'Release 1.0.0'
+          body: |
+            $(cat DEPLOY.md) # El contenido de DEPLOY.md se incluye en la descripción
