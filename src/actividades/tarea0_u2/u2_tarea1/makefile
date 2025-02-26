@@ -2,6 +2,7 @@
 HUGO = hugo
 DIST_DIR = ../u2_tarea0/dist
 POST_DIR = ../u2_tarea0/dist/content/posts
+THEMES_DIR = themes
 THEME_ZIP = ananke.zip
 THEME_DIR = gohugo-theme-ananke-master
 THEME_REPO = https://github.com/theNewDynamic/gohugo-theme-ananke/archive/refs/heads/master.zip
@@ -26,6 +27,7 @@ build: clean ## Paso "Build": Genera el sitio web a partir de los archivos de co
 	fi
 	
 	@echo "Descomprimiendo el tema..."
+	@mkdir -p $(THEMES_DIR)
 	@if [ ! -d $(THEME_PATH) ]; then \
 		unzip -o $(THEME_ZIP) && mv $(THEME_DIR) $(THEME_PATH); \
 	else \
